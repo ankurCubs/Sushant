@@ -7,12 +7,16 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
-const UserModel = require('./models/User');
-const CounterModel = requir
-app.get('/user/register',(req,res)=>{
+const registerRoute = require('./routes/register');
+app.use('/users/register',registerRoute);
+
+const loginRoute = require('./routes/login');
+app.use('/auth',loginRoute);
 
 
-})
+
+
+
 
 
 const start = ()=>{

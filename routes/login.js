@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const user = require('../models/User');
 
 const login = async(req,res)=>{
+//     console.log(req.cookie.cookiename);
 
     const {username,password}=req.body;
         try{
@@ -27,17 +28,21 @@ const login = async(req,res)=>{
                         const token = jwt.sign(
                         {id:userData._id},
                         process.env.SECRET_KEY,
-                        {expiresIn:'1h'}
+                        {expiresIn:'2h'}
                         );
-                        const expiresIn = new Date(Date.now()+1*60*60*1000);
-                        res.status(200).json({token:token,expiresIn:expiresIn});
+                       
+                        const expirein=new Date(Date.now()+2*60*60*1000);
+                        const options={
+                            expires:expirein,
+                            httpOnly:true
+                        };
+                        res.status(200).cookie('token',token,options).json({token:token,expiresIn:expirein});
                 }
               
             }catch(err){
                     console.log(err);
             }
         }
-
 router.route('/').post(login);
 
 module.exports=router;

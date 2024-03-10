@@ -52,12 +52,6 @@ const encPassword= await bcrypt.hash(password,10);
 
     }
     
-    
-
-
-   
-
-    // userData.save();
 
 
 }

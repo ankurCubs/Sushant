@@ -8,18 +8,47 @@ const register = async (req,res)=>{
 
     const {username,email,password,role}=req.body;
 
-    
-    const userData=await user.find({'$or':[{username:username},{email:email}]});
-   
-    console.log(userData.length);
+    try{
+        const userData=await user.find({'$or':[{username:username},{email:email}]});
+        // console.log(userData.length);
+        if(userData.length!==0){
+            res.status(400).json({"message":"Username or Password already exist"});
+        }else{
+            const encPassword= await bcrypt.hash(password,10);
+            const data = user.create({
+                username:req.body.username,
+                email:req.body.email,
+                password:encPassword,
+                role:req.body.role,
+                pan:req.body.pan
+            })
+            res.status(400).json({"message":"User registered successfully"});
+        }   
+    }catch(err){
+        res.status(500).json({ message: 'Internal server error' });
+    } 
+}
+router.route('/').post(register);
+module.exports= router;
 
-    if(userData.length!==0){
-       
-        res.status(400).json({"message":"Username or Password already exist"});
-        
-    }else{
 
-        // let seqNum=1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+ // let seqNum=1;
         //    await CounterModel.findOneAndUpdate(
 //         {id:'autoval'},
 //         {"$inc":{"seq":1}},
@@ -38,25 +67,5 @@ const register = async (req,res)=>{
 //             }
 //         }
 //     )
-const encPassword= await bcrypt.hash(password,10);
-    const data = user.create({
-        
-        username:req.body.username,
-        email:req.body.email,
-        password:encPassword,
-        role:req.body.role,
-        pan:req.body.pan
-       
-    })
-    res.status(400).json({"message":"User registered successfully"});
 
-    }
-    
-
-
-}
-
-router.route('/').post(register);
-
-module.exports= router;
-
+*/ 

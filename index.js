@@ -19,6 +19,13 @@ const categoriesRoute =require('./routes/category');
 app.use('/categories',adminAuth,categoriesRoute);
 
 
+const listProductRoute = require('./routes/product');
+app.use('/products',listProductRoute);
+
+const orderRoute=require('./routes/order');
+app.use('/order',orderRoute);
+
+
 const start = ()=>{
     app.listen(PORT,()=>{
         console.log(`server running at ${PORT}`);

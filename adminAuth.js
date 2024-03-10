@@ -26,7 +26,7 @@ const adminAuth = async (req,res,next)=>{
         next();
     }catch(err){
         console.log(err);
-        // res.status(400).json({"message":"unauthorized user"});
+        res.status(400).json({"message":"Internal server error"});
     }
 
 

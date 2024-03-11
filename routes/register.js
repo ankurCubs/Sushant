@@ -1,5 +1,5 @@
 const user = require('../models/User');
-const CounterModel = require('../models/Counter');
+
 const express= require('express');
 const router = express.Router();
 const  bcrypt = require('bcryptjs');

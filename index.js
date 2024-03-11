@@ -3,7 +3,10 @@ const express= require('express');
 const app = express();
 const connectDb= require('./DB/connect');
 
-const adminAuth = require('./adminAuth');
+
+const adminAuth = require('./middlewares/adminAuth');
+const customerAuth = require('./middlewares/customerAuth');
+
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
@@ -23,7 +26,8 @@ const listProductRoute = require('./routes/product');
 app.use('/products',listProductRoute);
 
 const orderRoute=require('./routes/order');
-app.use('/order',orderRoute);
+app.use('/order',customerAuth,orderRoute);
+
 
 
 const start = ()=>{

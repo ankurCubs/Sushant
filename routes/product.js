@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product'); 
-const adminAuth = require('../adminAuth');
+const adminAuth = require('../middlewares/adminAuth');
 
 const getProducts = async(req,res)=>{
     try {
@@ -32,10 +32,7 @@ const getProducts = async(req,res)=>{
         sortCriteria[sortField] = sortOrder === 'asc' ? 1 : -1;
 
                                 // Fetching products from MongoDB
-        const products = await Product.find(query)
-                                     .sort(sortCriteria)
-                                     .skip(skip)
-                                     .limit(pageSize);
+        const products = await Product.find(query).sort(sortCriteria).skip(skip).limit(pageSize);
         
                     // Count total products
          const totalProducts = await Product.countDocuments(query);
@@ -74,8 +71,8 @@ const postProduct = async(req,res)=>{
     }
 }
 
-router.get('/', getProducts);
-router.post('/',adminAuth,postProduct);
+router.get('/', getProducts); //
+router.post('/',adminAuth,postProduct); // okay
 
 module.exports = router;
 

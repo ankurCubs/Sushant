@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
-// const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const UserSchema = new mongoose.Schema({
-    // id:{
-    //     type:Number
-    // },
     username:{
         type:String,
         required:true,
@@ -25,10 +21,12 @@ const UserSchema = new mongoose.Schema({
     },
     pan:{
         type:String
+    },
+    orderIds:{
+        type:mongoose.Schema.Types.Array
     }
-
 })
 
-// UserSchema.plugin(AutoIncrement, { inc_field: 'id' });
+
 
 module.exports = mongoose.model('User',UserSchema);

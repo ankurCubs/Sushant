@@ -7,7 +7,7 @@ const orderSchema = mongoose.Schema({
     },
     status:{
         type:String,
-        enum:['Placed','Paid','Canceled','Transit']
+        enum:['Placed','Paid','Canceled','Transit','Failed']
     },
     orderDate:{
         type:mongoose.Schema.Types.Date,

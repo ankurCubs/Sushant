@@ -28,6 +28,13 @@ app.use('/products',listProductRoute);
 const orderRoute=require('./routes/order');
 app.use('/order',customerAuth,orderRoute);
 
+const processPaymentRoute=require('./routes/process-payment');
+app.use('/transaction/process-payment',customerAuth,processPaymentRoute);
+
+const cancelOrderRoute= require('./routes/cancel-order');
+app.use('/transaction/cancel-order',cancelOrderRoute);
+
+
 
 
 const start = ()=>{

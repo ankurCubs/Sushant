@@ -12,6 +12,9 @@ const orderItemSchema=mongoose.Schema({
     quantity:{
         type:Number,
         required:true
+    },
+    transactionDetail:{  // added leter (when '/process-payment' endpoint created)
+        type:mongoose.Schema.Types.ObjectId
     }
 });
 

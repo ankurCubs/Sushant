@@ -35,6 +35,8 @@ const cancelOrderRoute= require('./routes/cancel-order');
 app.use('/transaction/cancel-order',cancelOrderRoute);
 
 
+const reviewRoute= require('./routes/review');
+app.use('/reviews',customerAuth,reviewRoute);
 
 
 const start = ()=>{

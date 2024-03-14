@@ -38,7 +38,6 @@ const login = async(req,res)=>{
                         };
                         res.status(200).cookie('token',token,options).json({token:token,expiresIn:expirein});
                 }
-              
             }catch(err){
                     console.log(err);
                     res.status(500).json({ message: 'Internal server error' });

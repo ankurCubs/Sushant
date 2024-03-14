@@ -29,7 +29,7 @@ const order = async(req,res)=>{
             productId: productId,
             quantity: quantity
         });
-
+        
         // ab orderId ko  User collection ke 'orderIds' field me push krwa denge.
         await User.findOneAndUpdate({_id:userId},{$push:{orderIds:orderData._id}}); // okay 
 

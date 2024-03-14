@@ -30,8 +30,8 @@ const processPayment = async(req,res)=>{
         if(paymentStatus==='failure'){
             await Order.findOneAndUpdate({_id:orderId},{$set:{status:'Failed'}}); // okay
           
-            // orderItemDetail se productId find karenge -> productId se product stock quantity increment kr denge
-            await Product.findOneAndUpdate({_id:orderItemDetail.productId},{$inc:{stockQuantity:orderItemDetail.quantity}});  // product k stockQuantity me orderItemDetail.quantity add kr denge
+            // STOCK RESTORATIN orderItemDetail se productId find karenge -> productId se product stock quantity increment kr denge
+            await Product.findOneAndUpdate({_id:orderItemDetail.productId},{$inc:{stockQuantity:orderItemDetail.quantity}});  
             return res.status(200).json({"message":"Payment failed","transactionId":paymentDetail._id});
         }  
         return res.status(200).json({"message":"Payment success","transcationId":paymentDetail._id});

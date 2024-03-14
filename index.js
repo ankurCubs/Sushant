@@ -39,6 +39,9 @@ const reviewRoute= require('./routes/review');
 app.use('/reviews',customerAuth,reviewRoute);
 
 
+const AdminRevenueAnalysisRoute =require('./routes/admin-revenue-analysis');
+app.use('/admin/dashboar/revenue-analysis',AdminRevenueAnalysisRoute);
+
 const start = ()=>{
     app.listen(PORT,()=>{
         console.log(`server running at ${PORT}`);

@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product'); 
 const adminAuth = require('../middlewares/adminAuth');
+const ProductCategory = require('../models/ProductCategory');
+const Categories = require('../models/Category');
 
 const getProducts = async(req,res)=>{
     try {
@@ -18,14 +20,12 @@ const getProducts = async(req,res)=>{
 
         if (req.query.priceRange) {
             const [minPrice, maxPrice] = req.query.priceRange.split('-');
-            query.price = { $gte: parseFloat(minPrice), $lte: parseFloat(maxPrice) };
+            query.price = { $gte: parseInt(minPrice), $lte: parseInt(maxPrice) };
         }
         if (req.query.rating) {
             const [minRating, maxRating] = req.query.rating.split('-');
             query.rating = { $gte: parseFloat(minRating), $lte: parseFloat(maxRating) };
-        }
-
-        
+        } 
         const sortField = req.query.field;
         const sortOrder = req.query.order || 'desc';
         const sortCriteria = {};
@@ -41,7 +41,7 @@ const getProducts = async(req,res)=>{
             products:products,
             pagination:{
                 currentPage: page,
-                totalProducts: totalPages,
+                totalPages: totalPages,
                 pageSize: pageSize,
                 totalItems:totalProducts
             }
@@ -56,7 +56,12 @@ const getProducts = async(req,res)=>{
 const postProduct = async(req,res)=>{
     try{
         const {name,description,price,stockQuantity,categories,weight,images}=req.body;
-        await Product.create({
+
+        // if(!(name&&description&&price&&stockQuantity&&categories&&weight&&images)){
+        //     return res.status(400).json({"message":"provide all values correctly"});
+
+        // }
+        const insertedData=await Product.create({
             name:name,
             description:description,
             price: price,
@@ -65,8 +70,19 @@ const postProduct = async(req,res)=>{
             weight: weight,
             images: images
         });
+         console.log(insertedData); // okay
+        // find category id using category name
+        const categoryId= await Categories.findOne({name:categories});
+        console.log(categoryId);
+        // maintain Product-category junction callection for querying data based on category
+        const addpdtCat =await ProductCategory.create({
+            productId:insertedData._id,
+            categoryId:categoryId._id
+        })
+        console.log(addpdtCat);
         res.json({"message":"Product added successfully"});
     }catch(err){
+        console.log(err);
         res.status(500).json({"message":"Internal server error"});
     }
 }

@@ -40,7 +40,10 @@ app.use('/reviews',customerAuth,reviewRoute);
 
 
 const AdminRevenueAnalysisRoute =require('./routes/admin-revenue-analysis');
-app.use('/admin/dashboar/revenue-analysis',AdminRevenueAnalysisRoute);
+app.use('/admin/dashboard/revenue-analysis',AdminRevenueAnalysisRoute);
+
+const AdminCustomerFilterRoute =require('./routes/admin-customer-filter');
+app.use('/admin/customers/filter',AdminCustomerFilterRoute);
 
 const start = ()=>{
     app.listen(PORT,()=>{

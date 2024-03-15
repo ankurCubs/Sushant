@@ -17,6 +17,7 @@ const AdminRevenueAnalysis = async (req,res)=>{
                                             {orderDate:{$lte:new Date(endDate)}}
                                             ]
                                         });
+        //                                
 
         console.log(allItem);
         res.status(200).json({"message":"okkkay"});
